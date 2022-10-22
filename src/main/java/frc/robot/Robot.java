@@ -25,10 +25,12 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  private WPI_TalonFX leftMotor = new WPI_TalonFX(4); 
-  private WPI_TalonFX rightMotor = new WPI_TalonFX(18); 
-  private Joystick joystick = new Joystick(0);
+  private WPI_TalonFX leftMotor = new WPI_TalonFX(1); //left front
+  private WPI_TalonFX leftMotor1 = new WPI_TalonFX(2); //left back
+  private WPI_TalonFX rightMotor = new WPI_TalonFX(3); // right front
+  private WPI_TalonFX rightMotor1 = new WPI_TalonFX(4); //rigt back
 
+  private Joystick joystick = new Joystick(0);
 
 
   /**
@@ -87,24 +89,45 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     leftMotor.setNeutralMode(NeutralMode.Brake); 
+    leftMotor1.setNeutralMode(NeutralMode.Brake); 
     rightMotor.setNeutralMode(NeutralMode.Brake); 
+    rightMotor1.setNeutralMode(NeutralMode.Brake); 
+
 
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double power = joystick.getRawAxis(1)*0.40;
-    double turn = joystick.getRawAxis(4)*0.25;
+    //double power = joystick.getRawAxis(1)*0.40;
+    //double turn = joystick.getRawAxis(4)*0.25;
     //below is for standard driving with classbots
     //double left = power+turn;
     //double right = power-turn; 
     // leftMotor.set(ControlMode.PercentOutput, left); //usually we use percent instead of velocity
     //rightMotor.set(ControlMode.PercentOutput, -right);
+
+  
     
     //below is for swerve module
+    //leftMotor.set(ControlMode.PercentOutput, power); //usually we use percent instead of velocity
+    //rightMotor.set(ControlMode.PercentOutput, turn);
+    
+    //sticks 
+    //double power = joystick.getRawAxis(1)*-1;
+    //double turn = joystick.getRawAxis(4)*-1;
+
+    //joystick
+    double power = joystick.getRawAxis(1);
+    double power1 = joystick.getRawAxis(5);
+    power = 1;
+    power1 = -1;
+
+  
     leftMotor.set(ControlMode.PercentOutput, power); //usually we use percent instead of velocity
-    rightMotor.set(ControlMode.PercentOutput, turn);
+    //leftMotor1.set(ControlMode.PercentOutput, left); //usually we use percent instead of velocity
+    rightMotor.set(ControlMode.PercentOutput, power1);
+    //rightMotor1.set(ControlMode.PercentOutput, -right);
   }
 
   /** This function is called once when the robot is disabled. */
